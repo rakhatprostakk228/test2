@@ -15,7 +15,7 @@ COPY composer.json composer.lock* ./
 RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
 
 COPY . .
-RUN composer dump-autoload --optimize
+RUN composer dump-autoload --optimize --no-scripts
 
 # SQLite создаётся при старте; миграции и сиды — в start
 RUN touch database/database.sqlite
