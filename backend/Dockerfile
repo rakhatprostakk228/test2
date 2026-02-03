@@ -22,5 +22,5 @@ RUN touch database/database.sqlite
 
 EXPOSE 8000
 
-# Render передаёт PORT; по умолчанию 8000
-CMD sh -c 'php artisan migrate --force && (php artisan db:seed --force || true) && php artisan serve --host=0.0.0.0 --port=${PORT:-8000}'
+# Render передаёт PORT; явно cd /app и полный путь к artisan (платформа может менять рабочую директорию)
+CMD sh -c 'cd /app && php /app/artisan migrate --force && (php /app/artisan db:seed --force || true) && exec php /app/artisan serve --host=0.0.0.0 --port=${PORT:-8000}'
