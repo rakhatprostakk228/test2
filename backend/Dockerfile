@@ -22,5 +22,5 @@ RUN touch database/database.sqlite
 
 EXPOSE 8000
 
-# Render монтирует репо в /app: при Root "test2/backend" путь может быть /app/test2/backend
-CMD sh -c 'for d in /app /app/backend /app/test2/backend; do [ -f "$d/artisan" ] && break; done && cd "$d" && php artisan migrate --force && (php artisan db:seed --force || true) && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000}'
+# Поиск artisan и запуск (Render монтирует репо в /app; при ошибке — вывод структуры каталогов)
+CMD sh -c 'd=; for p in /app /app/backend /app/test2/backend; do [ -f "$p/artisan" ] && d=$p && break; done; if [ -z "$d" ]; then echo "=== artisan not found ==="; ls -la /app 2>/dev/null; ls -la /app/backend 2>/dev/null; ls -la /app/test2 2>/dev/null; exit 1; fi; cd "$d" && php artisan migrate --force && (php artisan db:seed --force || true) && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000}'
