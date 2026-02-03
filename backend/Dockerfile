@@ -17,6 +17,10 @@ RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
 COPY . .
 RUN composer dump-autoload --optimize --no-scripts
 
+# Laravel требует bootstrap/cache (и storage) — создаём и даём права на запись
+RUN mkdir -p bootstrap/cache storage storage/logs storage/framework/cache storage/framework/sessions storage/framework/views \
+    && chmod -R 777 bootstrap/cache storage
+
 # SQLite создаётся при старте; миграции и сиды — в start
 RUN touch database/database.sqlite
 
