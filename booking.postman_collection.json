@@ -1,0 +1,90 @@
+{
+  "info": {
+    "name": "Booking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000/api"
+    },
+    {
+      "key": "bookingId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Create booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/bookings",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"full_name\": \"Ivan Petrov\",\n  \"email\": \"ivan.petrov@example.com\",\n  \"phone\": \"+77001234567\",\n  \"booking_date\": \"2026-02-10\",\n  \"booking_time\": \"18:30\",\n  \"guests\": 3,\n  \"notes\": \"Window seat\"\n}"
+        }
+      }
+    },
+    {
+      "name": "List bookings",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/bookings?status=confirmed"
+      }
+    },
+    {
+      "name": "Update booking",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/bookings/{{bookingId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"booking_time\": \"19:00\",\n  \"guests\": 4\n}"
+        }
+      }
+    },
+    {
+      "name": "Update status",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/bookings/{{bookingId}}/status",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"confirmed\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Download PDF",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/bookings/{{bookingId}}/pdf"
+      }
+    },
+    {
+      "name": "Delete booking",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/bookings/{{bookingId}}"
+      }
+    }
+  ]
+}
