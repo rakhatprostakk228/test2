@@ -2,7 +2,7 @@
 FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git unzip libzip-dev libpng-dev \
+    git unzip libzip-dev libpng-dev libsqlite3-dev \
     && docker-php-ext-install zip pdo pdo_sqlite \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
