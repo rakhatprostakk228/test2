@@ -22,5 +22,5 @@ RUN touch database/database.sqlite
 
 EXPOSE 8000
 
-# Render передаёт PORT; явно cd /app и полный путь к artisan (платформа может менять рабочую директорию)
-CMD sh -c 'cd /app && php /app/artisan migrate --force && (php /app/artisan db:seed --force || true) && exec php /app/artisan serve --host=0.0.0.0 --port=${PORT:-8000}'
+# Render может монтировать репо в /app: при Root Directory "test2/backend" файлы оказываются в /app/backend/
+CMD sh -c 'if [ -f /app/artisan ]; then d=/app; else d=/app/backend; fi && cd "$d" && php artisan migrate --force && (php artisan db:seed --force || true) && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000}'
